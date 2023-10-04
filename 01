@@ -1,3 +1,7 @@
+
+for github
+
+
 ------------------------------------------
 sudo apt update && sudo apt upgrade -y
 ---------------------------------------------
@@ -35,9 +39,9 @@ rm -rf networks
 git clone https://github.com/celestiaorg/networks.git
 
 --------------------------
-CELESTIA_NODENAME="saeedE" 
-CELESTIA_WALLET="saeed01"
-CELESTIA_CHAIN="momoka"
+CELESTIA_NODENAME="saeed" 
+CELESTIA_WALLET="saeedbir"
+CELESTIA_CHAIN="mamaki"
 
 ----------------------------------------------------------
 echo 'export CELESTIA_CHAIN='$CELESTIA_CHAIN >> $HOME/.bash_profile
@@ -139,3 +143,45 @@ SNAP_NAME=$(curl -s https://snaps.qubelabs.io/celestia/ | \
     egrep -o ">mamaki.*tar" | tr -d ">")
 wget -O - https://snaps.qubelabs.io/celestia/${SNAP_NAME} | tar xf - \
     -C ~/.celestia-app/data/
+
+------------------------------------------------------------------
+منتظر بمانید تا گره شما اکثر بلوک ها را از زنجیره بلوکی Celestia دانلود کند
+
+--------------------------------------------------
+sudo systemctl restart celestia-appd && journalctl -u celestia-appd -f -o cat
+
+-------------------------------------------------
+CTRL+C را فشار دهید تا لاگ ها متوقف شوند
+
+---------------------------------
+قبل از ادامه، با کد زیر مطمئن شوید که به طور کامل با شبکه همگام شده اید 
+
+curl -s localhost:26657/status | grep block_height
+------------------------------------------------
+باید منتظر بمانید تا گره Validator شما همه بلوک‌ها را از زنجیره بلوکی سلستیا دانلود کند
+
+---------------------------------------------------
+
+celestia-appd keys add $CELESTIA_WALLET
+
+اطلاعات دریافتی این بخش رو توی نوت پد برای خودتون ذخیره کنید
+
+-----------------------------------
+CELESTIA_ADDR=$(celestia-appd keys show $CELESTIA_WALLET -a) 
+echo $CELESTIA_ADDR 
+echo 'export CELESTIA_ADDR='${CELESTIA_ADDR} >> $HOME/.bash_prof
+
+------------------------------------------------
+CELESTIA_VALOPER=$(celestia-appd keys show $CELESTIA_WALLET --bech val -a) 
+echo $CELESTIA_VALOPER 
+echo 'export CELESTIA_VALOPER='${CELESTIA_VALOPER} >> $HOME/.bash_profile 
+source $HOME/.bash_profile
+
+--------------------------------------------
+با لینک https://discord.gg/celestiacommunity وارد دیسکورد پروژه بشید و به بخش mamaki faucet  برید و به شکل زیر ادرس خودتون رو وارد کنید و درخواست فاست شبکه رو بدید
+$request celestia1a35035fu83jkeeqz00d3jmt3k5wu5x3lyvn6qp
+
+------------------------------------- 
+با کد زیر هم میتونید موجودی ولت خودتون رو ببنید  که به جای ایکس ها ادرس خودتون رو وارد کنید 
+
+celestia-appd q bank balances xxxxxxxxxxxxx
